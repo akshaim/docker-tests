@@ -1,4 +1,16 @@
 #!/bin/sh
+
+var1=$(id -nG)
+if ! echo $var1 | grep -q "docker"; then
+    echo -e "\e[31m Error : User not added to docker group. Refer README.md. \e[0m"
+    exit 1
+fi
+
+if ! docker info >/dev/null 2>&1; then
+    echo -e "\e[31m Error : Docker does not seem to be running \e[0m"
+    exit 1
+fi
+
 echo "Container name?"
 read _name
 echo "Container port?"
